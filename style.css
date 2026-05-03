@@ -1,0 +1,33 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #181818;
+  color: #f2f2f2;
+}
+
+.game-wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px;
+}
+
+#gameCanvas {
+  border: 2px solid #555;
+  background: #2a2a2a;
+  max-width: 100%;
+  height: auto;
+}
+
+.hud {
+  text-align: center;
+  font-size: 14px;
+  color: #cfd3d7;
+}
