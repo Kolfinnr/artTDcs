@@ -310,7 +310,10 @@ function update(dt) {
 
 function drawStation(station) {
   const isNearby = getNearestStation(115) === station;
-  ctx.fillStyle = station.damaged ? '#7a2b2b' : '#3f5265';
+  const stationGrad = ctx.createLinearGradient(station.x, station.y, station.x, station.y + station.h);
+  stationGrad.addColorStop(0, station.damaged ? '#8c2f2f' : '#4e667d');
+  stationGrad.addColorStop(1, station.damaged ? '#5b1e1e' : '#324354');
+  ctx.fillStyle = stationGrad;
   ctx.fillRect(station.x, station.y, station.w, station.h);
 
   ctx.strokeStyle = isNearby ? '#f1c40f' : '#99a8b8';
@@ -354,16 +357,59 @@ function drawPlayer() {
 }
 
 function drawCannon() {
-  // Simple cannon base and barrel line.
-  ctx.strokeStyle = '#222';
-  ctx.lineWidth = 7;
+  // Stylized cannon with base, wheel, and barrel glow.
+  ctx.strokeStyle = '#1f1f1f';
+  ctx.lineWidth = 10;
   ctx.beginPath();
   ctx.moveTo(500, 300);
-  ctx.lineTo(700, 220);
+  ctx.lineTo(710, 215);
   ctx.stroke();
 
-  ctx.fillStyle = '#444';
-  ctx.fillRect(470, 300, 70, 24);
+  ctx.strokeStyle = '#5a5a5a';
+  ctx.lineWidth = 5;
+  ctx.beginPath();
+  ctx.moveTo(505, 297);
+  ctx.lineTo(708, 217);
+  ctx.stroke();
+
+  ctx.fillStyle = '#3c3c3c';
+  ctx.fillRect(462, 298, 85, 28);
+
+  ctx.beginPath();
+  ctx.fillStyle = '#272727';
+  ctx.arc(480, 328, 14, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.fillStyle = '#555';
+  ctx.arc(480, 328, 6, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function drawBackgroundDetails() {
+  // Back wall gradient and bunker ribs for extra visual depth.
+  const wallGrad = ctx.createLinearGradient(0, 0, 0, WORLD.height);
+  wallGrad.addColorStop(0, '#38444f');
+  wallGrad.addColorStop(1, '#242d35');
+  ctx.fillStyle = wallGrad;
+  ctx.fillRect(0, 0, WORLD.width, WORLD.height);
+
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.17)';
+  for (let x = 40; x < WORLD.width; x += 90) {
+    ctx.fillRect(x, 70, 16, 320);
+  }
+
+  // Floor striping for orientation.
+  ctx.fillStyle = '#394550';
+  ctx.fillRect(0, 380, WORLD.width, 160);
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+  ctx.lineWidth = 2;
+  for (let x = 0; x < WORLD.width; x += 70) {
+    ctx.beginPath();
+    ctx.moveTo(x, 420);
+    ctx.lineTo(x + 30, 540);
+    ctx.stroke();
+  }
 }
 
 function drawHUD() {
@@ -427,12 +473,7 @@ function drawComboUI() {
 
 function render() {
   // Bunker interior background.
-  ctx.fillStyle = '#2b3137';
-  ctx.fillRect(0, 0, WORLD.width, WORLD.height);
-
-  // Slight floor tint.
-  ctx.fillStyle = '#353f48';
-  ctx.fillRect(0, 380, WORLD.width, 160);
+  drawBackgroundDetails();
 
   drawCannon();
 

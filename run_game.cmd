@@ -1,16 +1,20 @@
 @echo off
 setlocal
 
-set "INDEX=%~dp0index.html"
-
-if not exist "%INDEX%" (
-  echo Error: Could not find index.html next to this script.
+where npm >nul 2>nul
+if errorlevel 1 (
+  echo Error: npm was not found. Install Node.js LTS first: https://nodejs.org/
   pause
   exit /b 1
 )
 
-echo Opening Bunker Crew Prototype in your default browser...
-echo Controls: WASD move, E interact, Arrow keys for combos.
-start "" "%INDEX%"
+echo Installing dependencies if needed...
+call npm install
+if errorlevel 1 (
+  echo Error: npm install failed.
+  pause
+  exit /b 1
+)
 
-echo Done. You can close this window.
+echo Launching Bunker Crew in its own window...
+call npm start

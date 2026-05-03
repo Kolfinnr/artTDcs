@@ -1,0 +1,13 @@
+{
+  "name": "bunker-crew-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Standalone desktop wrapper for the bunker crew canvas prototype",
+  "main": "electron-main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^31.0.0"
+  }
+}
